@@ -6,6 +6,9 @@ env/
 # Editor files
 .vscode/
 
+# Build and temp directories
+tmp_pyt/
+
 # Python cache
 __pycache__/
 *.py[cod]
