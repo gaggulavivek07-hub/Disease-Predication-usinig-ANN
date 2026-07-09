@@ -119,6 +119,13 @@ def load_dataset() -> pd.DataFrame:
     return data
 
 
+def remove_saved_model_files():
+    if MODEL_PATH.exists():
+        MODEL_PATH.unlink()
+    if ENCODER_PATH.exists():
+        ENCODER_PATH.unlink()
+
+
 @st.cache_resource(show_spinner=False)
 def load_or_train_model():
     data = load_dataset()
@@ -129,8 +136,8 @@ def load_or_train_model():
             model = tf.keras.models.load_model(MODEL_PATH)
             label_encoder = joblib.load(ENCODER_PATH)
             return model, label_encoder, feature_columns
-        except Exception as exc:
-            st.warning(f"The saved model could not be loaded ({exc}). Training a fresh model instead.")
+        except Exception:
+            remove_saved_model_files()
 
     with st.spinner("Training the disease prediction model. This will only happen once."):
         X = data[feature_columns].astype("float32").to_numpy()
