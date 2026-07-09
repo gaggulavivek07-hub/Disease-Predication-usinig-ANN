@@ -125,9 +125,12 @@ def load_or_train_model():
     feature_columns = [col for col in data.columns if col != "prognosis"]
 
     if MODEL_PATH.exists() and ENCODER_PATH.exists():
-        model = tf.keras.models.load_model(MODEL_PATH)
-        label_encoder = joblib.load(ENCODER_PATH)
-        return model, label_encoder, feature_columns
+        try:
+            model = tf.keras.models.load_model(MODEL_PATH)
+            label_encoder = joblib.load(ENCODER_PATH)
+            return model, label_encoder, feature_columns
+        except Exception as exc:
+            st.warning(f"The saved model could not be loaded ({exc}). Training a fresh model instead.")
 
     with st.spinner("Training the disease prediction model. This will only happen once."):
         X = data[feature_columns].astype("float32").to_numpy()
