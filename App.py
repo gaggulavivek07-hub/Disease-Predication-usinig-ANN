@@ -10,7 +10,7 @@ DATASET_PATH = BASE_DIR / "Testing.csv"
 MODEL_PATH = BASE_DIR / "disease_model.keras"
 ENCODER_PATH = BASE_DIR / "label_encoder.joblib"
 
-st.set_page_config(page_title="Disease Prediction App", page_icon="🩺By Gaggula Vivek", layout="wide")
+st.set_page_config(page_title="Disease Prediction App BY Gaggula Vivek", page_icon="🩺By Gaggula Vivek", layout="wide")
 
 DISEASE_GUIDANCE = {
     "Fungal infection": {
